@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Messiah Math EdTech Solutions - Cinematic Portfolio</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --gold: #EAB308;
+            --dark-bg: #0c0c0c;
+            --blue-dark: #101827;
+            --blue-light: #172541;
+            --light-gray: #D1D5DB;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--dark-bg);
+            color: var(--light-gray);
+        }
+        h1, h2, h3, .font-display {
+            font-family: 'Cormorant Garamond', serif;
+            font-weight: 700;
+            letter-spacing: 0.5px;
+        }
+        .text-gold { color: var(--gold); }
+        .bg-gold { background-color: var(--gold); }
+        .border-gold { border-color: var(--gold); }
+        .hover\:text-gold:hover { color: var(--gold); }
+        .hover\:border-gold-strong:hover { border-color: var(--gold); }
+        .hero-text-shadow {
+            text-shadow: 0px 2px 15px rgba(0, 0, 0, 0.7);
+        }
+        .placeholder {
+            background-color: rgba(255, 255, 255, 0.05);
+            border: 2px dashed rgba(255, 255, 255, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            color: rgba(255, 255, 255, 0.4);
+        }
+        .section-blue-shine {
+            background-image: radial-gradient(circle at center, var(--blue-light), var(--blue-dark));
+            color: var(--light-gray);
+        }
+        #hero-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+        }
+
+        #services-bubbles {
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 0;
+}
+
+        .modal {
+            transition: opacity 0.3s ease;
+        }
+        .faq-question {
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+        .faq-answer {
+            max-height: 0;
+            overflow: hidden;
+            transition: max-height 0.4s ease, padding 0.4s ease;
+        }
+        .faq-item.active .faq-answer {
+            max-height: 200px; /* Adjust as needed */
+            padding-top: 1rem;
+        }
+        .faq-item.active .faq-arrow {
+            transform: rotate(180deg);
+        }
+        .faq-arrow {
+            transition: transform 0.3s ease;
+        }
+
+.whatsapp-float {
+  position: fixed;
+  width: 60px;
+  height: 60px;
+  bottom: 20px;
+  right: 20px;
+  border-radius: 50%;
+  background: #25D366; /* clean background to hide any image edge */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+  z-index: 9999;
+}
+
+.whatsapp-icon {
+  width: 70%;
+  height: 70%;
+  object-fit: contain;
+  border-radius: 50%;
+}
+
+
+
+    </style>
+</head>
+<body class="antialiased">
+
+    <!-- Header -->
+    <header class="bg-black/80 backdrop-blur-md sticky top-0 z-50 transition-all duration-300 border-b border-gray-800" id="header">
+        <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+            <a href="#hero" class="flex items-center space-x-3">
+                <span class="text-xl font-display text-white">Messiah Math EdTech Solutions</span>
+            </a>
+            <div class="hidden md:flex items-center space-x-8">
+                <a href="#about" class="text-white hover:text-gold transition text-lg">About</a>
+                <a href="#services" class="text-white hover:text-gold transition text-lg">Services</a>
+                <a href="careers.html" class="text-white hover:text-gold transition text-lg">Careers</a>
+                <a href="contact.html" class="text-white hover:text-gold transition text-lg">Connect</a>
+                <a href="#contact" class="bg-gold text-black px-6 py-2 rounded-full font-semibold hover:bg-amber-600 transition">Contact</a>
+            </div>
+            <div class="md:hidden">
+                <button id="mobile-menu-button" class="text-white focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/90 px-6 pb-4 space-y-2">
+            <a href="#about" class="block py-2 text-white hover:text-gold text-center text-lg">About</a>
+            <a href="#services" class="block py-2 text-white hover:text-gold text-center text-lg">Services</a>
+            <a href="careers.html" class="block py-2 text-white hover:text-gold text-center text-lg">Careers</a>
+            <a href="contact.html" class="block py-2 text-white hover:text-gold text-center text-lg">Connect</a>
+            <a href="#contact" class="block mt-2 bg-gold text-black text-center px-4 py-2 rounded-full">Contact</a>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section id="hero" class="relative min-h-screen flex flex-col items-center justify-center text-center text-white px-6 pt-10 pb-12 overflow-hidden">
+            <canvas id="hero-canvas"></canvas>
+            <div class="absolute inset-0 bg-black/60 z-10"></div>
+            <div class="relative z-20 w-full max-w-5xl mx-auto">
+              <div class="aspect-[16/9] rounded-lg mb-8 border border-solid border-black/20"
+     style="background-color: rgba(255,255,255,0.05); color: rgba(255,255,255,0.4);">
+    <img src="images/logo.jpeg" alt="Banner Logo" class="w-full h-full object-cover rounded-lg" />
+              </div>
+                <div class="hero-text-shadow">
+                    <h1 class="text-5xl md:text-7xl lg:text-8xl font-display leading-tight text-white">Crafting Clarity in Mathematics</h1>
+                    <p class="mt-6 text-xl md:text-2xl text-gold italic">Making Math Meaningful — Powered by Faith and Innovation</p>
+                    <a href="#about" class="mt-12 inline-block border-2 border-white text-white px-10 py-3 rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300">Discover My Mission</a>
+                </div>
+            </div>
+        </section>
+<!-- WhatsApp Floating Icon -->
+<a href="https://wa.me/qr/BZES76NBQTLJG1" 
+   target="_blank" 
+   aria-label="Chat on WhatsApp"
+   class="whatsapp-float">
+    <img src="images/wap.png" alt="WhatsApp" class="whatsapp-icon">
+</a>
+
+
+
+        <!-- About Me Section -->
+        <section id="about" class="py-24 md:py-32 section-blue-shine">
+            <div class="container mx-auto px-6">
+                <div class="grid lg:grid-cols-2 gap-12 md:gap-16 items-center">
+                    <div class="flex flex-col items-center justify-center">
+                         <div class="mb-4 flex justify-center space-x-6">
+                      <a href="https://in.linkedin.com/in/gayathri-vijayan-b06b14322" 
+                     target="_blank" 
+                 class="block w-12 h-12 transition transform hover:scale-110"
+              aria-label="LinkedIn">
+              <img src="images/linkedin.png" 
+              alt="LinkedIn" 
+              class="w-full h-full object-contain" />
+               </a>
+
+<a href="https://www.instagram.com/messiahmathedtechsolutions?utm_source=qr&igsh=MTVsbDg1dHRoY2l4bw==" 
+   target="_blank" 
+   class="block w-12 h-12 transition transform hover:scale-110"
+   aria-label="Instagram">
+    <img src="images/instagram.png" 
+         alt="Instagram" 
+         class="w-full h-full object-contain" />
+</a>
+  </div>
+                        <img src="images/profile.jpeg" alt="Founder Photo"  class="w-80 h-80 md:w-96 md:h-96  rounded-full">
+                        <p class="text-xl text-gold mt-6 font-bold">Founder & Freelancing Lead</p>
+                    </div>
+                    <div class="text-center lg:text-left">
+                        <h2 class="text-4xl md:text-5xl font-display text-gold">About Me</h2>
+                        <p class="mt-6 text-lg text-gray-300 leading-relaxed">Hello! I’m a passionate Mathematics educator, content creator, and curriculum developer with over six years of experience. Currently pursuing my Ph.D. in Mathematics at Vels University, Chennai, I hold M.Sc. and B.Sc. degrees in Mathematics, both with First Class honors.</p>
+                        <p class="mt-4 text-lg text-gray-300 leading-relaxed">As the founder of Messiah Math EdTech Solutions, my mission is to transform complex mathematical concepts into clear, engaging, and accessible learning experiences. With a heart grounded in faith, I believe that every problem has a solution, and every student has the potential to excel when taught with purpose, creativity, and compassion.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Our Team Section -->
+        <section id="team" class="py-24 md:py-32 bg-dark-bg">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-5xl font-display text-gold">Our Team and Expertise</h2>
+                <p class="mt-6 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">We specialize in delivering high-quality premium math content projects enriched with engaging illustrations. Our team includes expert graphic designers with a strong foundation in mathematics, ensuring both visual appeal and academic accuracy. Whether it's curriculum development, worksheets, or digital content, we blend creativity with conceptual clarity to meet your project needs.</p>
+                <p class="mt-4 text-lg text-gray-300 max-w-3xl mx-auto leading-relaxed">My team and I are experts in handling complex math projects, from curriculum design to animated video production. We are committed to delivering excellence, powered by a foundation of faith and a passion for innovation.</p>
+            </div>
+        </section>
+
+        <!-- Counter Section -->
+        <section id="counter" class="py-20 section-blue-shine">
+            <div class="container mx-auto px-6 grid md:grid-cols-3 gap-8 text-center">
+                <div>
+                    <span class="text-5xl font-display text-gold" data-target="100">0</span><span class="text-5xl font-display text-gold">+</span>
+                    <p class="mt-2 text-lg text-gray-300">Successful Projects</p>
+                </div>
+                <div>
+                    <span class="text-5xl font-display text-gold" data-target="50">0</span><span class="text-5xl font-display text-gold">+</span>
+                    <p class="mt-2 text-lg text-gray-300">Happy Clients</p>
+                </div>
+                <div>
+                    <span class="text-5xl font-display text-gold" data-target="6">0</span><span class="text-5xl font-display text-gold">+</span>
+                    <p class="mt-2 text-lg text-gray-300">Years of Experience</p>
+                </div>
+            </div>
+        </section>
+
+      <section id="services" class="relative py-24 md:py-32 bg-dark-bg overflow-hidden">
+    <!-- Bubble background -->
+    <canvas id="services-bubbles" class="absolute inset-0 w-full h-full"></canvas>
+    <div class="relative z-10 container mx-auto px-6">
+        <div class="text-center max-w-3xl mx-auto">
+            <h2 class="text-4xl md:text-5xl font-display text-gold">Our Core Services</h2>
+        </div>
+        <div class="mt-20 grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+            <!-- Service Cards -->
+            <div class="service-card bg-black/50 p-8 rounded-lg border-2 border-yellow-500 hover:border-yellow-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" data-service="curriculum">
+                <h3 class="text-2xl font-display text-white">Curriculum & Content Creation</h3>
+            </div>
+            <div class="service-card bg-black/50 p-8 rounded-lg border-2 border-yellow-500 hover:border-yellow-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" data-service="tutoring">
+                    <h3 class="text-2xl font-display text-white">Online Math Tutoring</h3></div>
+                    <div class="service-card bg-black/50 p-8 rounded-lg border-2 border-yellow-500 hover:border-yellow-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" data-service="assessment"><h3 class="text-2xl font-display text-white">Assessment & Question Banks</h3></div>
+                    <div class="service-card bg-black/50 p-8 rounded-lg border-2 border-yellow-500 hover:border-yellow-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" data-service="visual"><h3 class="text-2xl font-display text-white">Visual Math Production</h3></div>
+                    <div class="service-card bg-black/50 p-8 rounded-lg border-2 border-yellow-500 hover:border-yellow-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" data-service="websites"><h3 class="text-2xl font-display text-white">Educational Website Creation</h3></div>
+                    <div class="service-card bg-black/50 p-8 rounded-lg border-2 border-yellow-500 hover:border-yellow-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" data-service="integration"><h3 class="text-2xl font-display text-white">Integration of Mathematics with Computer Science</h3></div>
+                    <div class="service-card bg-black/50 p-8 rounded-lg border-2 border-yellow-500 hover:border-yellow-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer" data-service="consulting"><h3 class="text-2xl font-display text-white">Math Expert Consulting for IT and Tech Firms</h3></div>
+                    <div class="service-card bg-black/50 p-8 rounded-lg border-2 border-yellow-500 hover:border-yellow-400 transition-all duration-300 transform hover:-translate-y-2 cursor-pointer"><h3 class="text-2xl font-display text-white">Freelance EdTech Partnership</h3></div>
+               
+        </div>
+    </div>
+</section>
+
+        
+        <!-- Process Section -->
+        <section id="process" class="py-24 md:py-32 section-blue-shine">
+            <div class="container mx-auto px-6">
+                <div class="text-center max-w-3xl mx-auto">
+                    <h2 class="text-4xl md:text-5xl font-display text-gold">Our Process</h2>
+                </div>
+                <div class="mt-20 flex flex-col md:flex-row justify-center items-start md:items-center gap-8 md:gap-0 relative">
+                    <div class="absolute top-1/2 left-0 w-full h-px bg-blue-light hidden md:block"></div>
+                    <div class="relative flex flex-col items-center text-center max-w-xs z-10"><div class="text-4xl text-gold mb-4 bg-blue-dark px-4 rounded-full border-2 border-blue-light">1</div><h3 class="text-2xl font-display text-white">Consultation</h3><p class="mt-2 text-gray-400">We start by understanding your goals and requirements.</p></div>
+                    <div class="relative flex flex-col items-center text-center max-w-xs z-10"><div class="text-4xl text-gold mb-4 bg-blue-dark px-4 rounded-full border-2 border-blue-light">2</div><h3 class="text-2xl font-display text-white">Design</h3><p class="mt-2 text-gray-400">We create a tailored plan and design for your project.</p></div>
+                    <div class="relative flex flex-col items-center text-center max-w-xs z-10"><div class="text-4xl text-gold mb-4 bg-blue-dark px-4 rounded-full border-2 border-blue-light">3</div><h3 class="text-2xl font-display text-white">Development</h3><p class="mt-2 text-gray-400">Our team gets to work, bringing the vision to life.</p></div>
+                    <div class="relative flex flex-col items-center text-center max-w-xs z-10"><div class="text-4xl text-gold mb-4 bg-blue-dark px-4 rounded-full border-2 border-blue-light">4</div><h3 class="text-2xl font-display text-white">Delivery</h3><p class="mt-2 text-gray-400">We deliver the final product, ensuring your complete satisfaction.</p></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- FAQ Section -->
+        <section id="faq" class="py-24 md:py-32 bg-dark-bg">
+            <div class="container mx-auto px-6 max-w-3xl">
+                <div class="text-center">
+                    <h2 class="text-4xl md:text-5xl font-display text-gold">Frequently Asked Questions</h2>
+                </div>
+                <div class="mt-12 space-y-4">
+                    <div class="faq-item bg-black/50 p-6 rounded-lg border border-gray-800"><div class="faq-question flex justify-between items-center"><h3 class="text-xl font-display text-white">What kind of clients do you work with?</h3><span class="faq-arrow text-2xl text-gold transform transition-transform">&darr;</span></div><div class="faq-answer text-gray-300"><p class="pt-4">We work with a wide range of clients, including EdTech startups, established educational companies, schools, and individual educators who need high-quality mathematics content.</p></div></div>
+                    <div class="faq-item bg-black/50 p-6 rounded-lg border border-gray-800"><div class="faq-question flex justify-between items-center"><h3 class="text-xl font-display text-white">What is your turnaround time for projects?</h3><span class="faq-arrow text-2xl text-gold transform transition-transform">&darr;</span></div><div class="faq-answer text-gray-300"><p class="pt-4">Turnaround time varies depending on the scope of the project. We work closely with our clients to establish clear timelines and milestones, and we are committed to timely delivery.</p></div></div>
+                    <div class="faq-item bg-black/50 p-6 rounded-lg border border-gray-800"><div class="faq-question flex justify-between items-center"><h3 class="text-xl font-display text-white">Can you handle large-scale curriculum development?</h3><span class="faq-arrow text-2xl text-gold transform transition-transform">&darr;</span></div><div class="faq-answer text-gray-300"><p class="pt-4">Absolutely. While I am available for individual freelance assignments, I also lead a multi-expert team capable of handling large-scale projects, ensuring both quality and efficiency.</p></div></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="py-24 md:py-32 section-blue-shine">
+            <div class="container mx-auto px-6 text-center">
+                <h2 class="text-4xl md:text-5xl font-display text-gold">Let's Build Something Meaningful</h2>
+                <p class="mt-4 text-lg text-gray-300 max-w-2xl mx-auto">For demos and sample works, please contact me. I am always open to discussing new projects, collaborations, or tutoring opportunities.</p>
+                <div class="mt-12 flex flex-col md:flex-row justify-center items-center gap-8">
+                    <a href="mailto:gai3chennai@yahoo.com" class="flex items-center gap-3 text-lg text-gray-300 hover:text-gold transition"><svg class="w-8 h-8 text-gold" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg><span>gai3chennai@yahoo.com</span></a>
+                    <a href="https://wa.me/qr/BZES76NBQTLJG1" target="_blank" class="flex items-center gap-3 text-lg text-gray-300 hover:text-gold transition"><svg class="w-8 h-8 text-gold" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.902-.539-5.587-1.52l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.451-4.437-9.887-9.888-9.888-5.452 0-9.888 4.436-9.889 9.888.001 2.268.809 4.322 2.251 5.961l-.234 1.424 1.432-.231z"></path></svg><span>Contact on WhatsApp</span></a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-dark-bg border-t border-gray-800">
+        <div class="container mx-auto px-6 py-8 text-center text-gray-500">
+            <p class="text-sm">&copy; 2025 Messiah Math EdTech Solutions. All Rights Reserved.</p>
+            <p class="text-xs mt-1">Based in Chennai, Tamil Nadu – Serving clients globally.</p>
+        </div>
+    </footer>
+    
+    <!-- Service Modal -->
+    <div id="service-modal" class="modal fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 opacity-0 pointer-events-none">
+        <div class="bg-blue-dark rounded-lg shadow-2xl w-full max-w-2xl relative flex flex-col max-h-[90vh] border border-blue-light">
+            <div class="p-6 border-b border-blue-light flex justify-between items-center"><h3 id="modal-title" class="text-2xl font-display text-gold">Service Details</h3><button onclick="closeModal()" class="text-gray-400 hover:text-white text-3xl">&times;</button></div>
+            <div id="modal-content" class="p-6 overflow-y-auto text-gray-300"></div>
+        </div>
+    </div>
+    
+    <!-- Back to Top Button -->
+    <a href="#hero" id="back-to-top" class="fixed bottom-6 right-6 bg-gold text-black p-3 rounded-full shadow-lg hover:bg-amber-600 transition-all duration-300 opacity-0 pointer-events-none"><svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 15l7-7 7 7"></path></svg></a>
+
+    <script>
+        // --- Particle Animation for Hero ---
+        const canvas = document.getElementById('hero-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        let particlesArray;
+
+        class Particle {
+            constructor(x, y, directionX, directionY, size, color) { this.x = x; this.y = y; this.directionX = directionX; this.directionY = directionY; this.size = size; this.color = color; }
+            draw() { ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2, false); ctx.fillStyle = this.color; ctx.fill(); }
+            update() { if (this.x > canvas.width || this.x < 0) { this.directionX = -this.directionX; } if (this.y > canvas.height || this.y < 0) { this.directionY = -this.directionY; } this.x += this.directionX; this.y += this.directionY; this.draw(); }
+        }
+
+        function initParticles() {
+            particlesArray = [];
+            let numberOfParticles = (canvas.height * canvas.width) / 9000;
+            for (let i = 0; i < numberOfParticles; i++) {
+                let size = (Math.random() * 2.5) + 1;
+                let x = (Math.random() * ((innerWidth - size * 2) - (size * 2)) + size * 2);
+                let y = (Math.random() * ((innerHeight - size * 2) - (size * 2)) + size * 2);
+                let directionX = (Math.random() * .5) - .25;
+                let directionY = (Math.random() * .5) - .25;
+                let color = 'rgba(234, 179, 8, 0.7)';
+                particlesArray.push(new Particle(x, y, directionX, directionY, size, color));
+            }
+        }
+
+        function animateParticles() { requestAnimationFrame(animateParticles); ctx.clearRect(0, 0, innerWidth, innerHeight); for (let i = 0; i < particlesArray.length; i++) { particlesArray[i].update(); } }
+        initParticles();
+        animateParticles();
+        window.addEventListener('resize', () => { canvas.width = innerWidth; canvas.height = innerHeight; initParticles(); });
+
+        // --- Counter Animation ---
+        const counters = document.querySelectorAll('[data-target]');
+        const counterObserver = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    const counter = entry.target;
+                    const target = +counter.getAttribute('data-target');
+                    let current = 0; const increment = target / 100;
+                    const updateCounter = () => { if (current < target) { current += increment; counter.innerText = Math.ceil(current); requestAnimationFrame(updateCounter); } else { counter.innerText = target; } };
+                    updateCounter();
+                    observer.unobserve(counter);
+                }
+            });
+        }, { threshold: 0.8 });
+        counters.forEach(counter => counterObserver.observe(counter));
+        
+        // --- Service Modal Logic ---
+        const serviceModal = document.getElementById('service-modal');
+        const modalTitle = document.getElementById('modal-title');
+        const modalContent = document.getElementById('modal-content');
+        const serviceCards = document.querySelectorAll('.service-card');
+      const serviceContent = {
+    'curriculum': {
+        title: 'Curriculum & Content Creation',
+        content: `Premium quality content for CBSE, ICSE, State Boards, IB, and US Common Core standards. This includes worksheets, lesson plans, and full curriculum design.
+        <a href="careers.html" class="mt-12 inline-block border-2 border-white text-white px-10 py-3 rounded-full font-semibold text-lg hover:bg-white hover:text-black transition-all duration-300">Connect with us</a>`
+    },
+    'tutoring': {
+        title: 'Online Math Tutoring',
+        content: 'Personalized, one-on-one and group tutoring sessions for K-12 and college-level mathematics, focusing on deep conceptual understanding.'
+    },
+    'assessment': {
+        title: 'Assessment & Question Banks',
+        content: 'Development of high-quality, error-free question banks, quizzes, and summative assessments tailored to your learning objectives.'
+    },
+    'visual': {
+        title: 'Visual Math Production',
+        content: 'Bringing math to life through digital animation, graphic math content, concept explanation videos, full video course creation, and more.'
+    },
+    'websites': {
+        title: 'Educational Website Creation',
+        content: 'Building professional, user-friendly websites for educators and academic projects to showcase expertise and services.'
+    },
+    'integration': {
+        title: 'Integration of Mathematics with Computer Science',
+        content: 'Tailored content and projects that blend math concepts with computer science applications to meet modern educational needs.'
+    },
+    'consulting': {
+        title: 'Math Expert Consulting for IT and Tech Firms',
+        content: 'We provide specialized consulting and project support for IT companies and tech startups that require deep mathematical expertise. This includes areas such as data science, machine learning, cryptography, algorithm design, scientific computing, and other math-intensive technology fields.'
+    },
+    'partnership': {
+        title: 'Freelance EdTech Partnership',
+        content: 'Collaborating with EdTech companies as a reliable freelance partner for content development, review, and strategy.'
+    }
+};
+
+        
+        serviceCards.forEach(card => {
+            card.addEventListener('click', () => {
+                const serviceKey = card.getAttribute('data-service');
+                const content = serviceContent[serviceKey];
+                if (content) { modalTitle.textContent = content.title; modalContent.innerHTML = `<p>${content.content}</p>`; serviceModal.classList.remove('opacity-0', 'pointer-events-none'); }
+            });
+        });
+        
+        function closeModal() { serviceModal.classList.add('opacity-0', 'pointer-events-none'); }
+
+        // --- FAQ Accordion ---
+        const faqItems = document.querySelectorAll('.faq-item');
+        faqItems.forEach(item => {
+            const question = item.querySelector('.faq-question');
+            question.addEventListener('click', () => {
+                const currentlyActive = document.querySelector('.faq-item.active');
+                if (currentlyActive && currentlyActive !== item) { currentlyActive.classList.remove('active'); }
+                item.classList.toggle('active');a
+            });
+        });
+
+        // --- Back to Top Button ---
+        const backToTopButton = document.getElementById('back-to-top');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 300) { backToTopButton.classList.remove('opacity-0', 'pointer-events-none'); } else { backToTopButton.classList.add('opacity-0', 'pointer-events-none'); }
+        });
+        
+        // --- Mobile Menu ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('#mobile-menu a, nav a');
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                mobileMenu.classList.add('hidden');
+                const targetId = link.getAttribute('href');
+                if (targetId.startsWith('#')) { e.preventDefault(); document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' }); }
+            });
+        });
+
+        
+function initBubbles(canvasId) {
+    const canvas = document.getElementById(canvasId);
+    const ctx = canvas.getContext("2d");
+    let particles = [];
+
+    function resizeCanvas() {
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+    }
+
+    window.addEventListener("resize", resizeCanvas);
+    resizeCanvas();
+
+    function createParticles() {
+        particles = [];
+        for (let i = 0; i < 50; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                r: Math.random() * 3 + 1,
+                d: Math.random() * 50,
+                speed: Math.random() + 0.2
+            });
+        }
+    }
+
+    function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgba(255, 215, 0, 0.6)"; // gold bubbles
+        ctx.beginPath();
+        for (let p of particles) {
+            ctx.moveTo(p.x, p.y);
+            ctx.arc(p.x, p.y, p.r, 0, Math.PI * 2, true);
+        }
+        ctx.fill();
+        move();
+    }
+
+    function move() {
+        for (let p of particles) {
+            p.y += p.speed;
+            if (p.y > canvas.height) {
+                p.x = Math.random() * canvas.width;
+                p.y = -10;
+            }
+        }
+    }
+
+    function loop() {
+        draw();
+        requestAnimationFrame(loop);
+    }
+
+    createParticles();
+    loop();
+}
+
+// Initialize bubbles for the services section
+initBubbles("services-bubbles");
+
+
+        
+    </script>
+</body>
+</html>

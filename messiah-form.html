@@ -1,0 +1,208 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Careers - Messiah Math EdTech Solutions</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+    rel="stylesheet"
+  />
+  <style>
+    :root {
+      --gold: #B8860B;
+      --blue-dark: #0a192f;
+      --cream-bg: #FDFBF5;
+      --dark-text: #1f2937;
+      --light-gray: #4b5563;
+    }
+    body {
+      font-family: 'Inter', sans-serif;
+      background-color: var(--blue-dark);
+      background-image: url(
+        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 200 200'%3E%3Cdefs%3E%3Cstyle%3E.equation %7B font-family: 'Cambria', 'Times New Roman', serif; font-size: 16px; fill: rgba(204, 214, 246, 0.08); %7D%3C/style%3E%3C/defs%3E%3Ctext x='10' y='30' class='equation'%3EE = mc%C2%B2%3C/text%3E%3Ctext x='120' y='50' class='equation' transform='rotate(-15 120 50)'%3E%E2%88%AB(x%C2%B2) dx%3C/text%3E%3Ctext x='20' y='100' class='equation' transform='rotate(10 20 100)'%3Ea%C2%B2%2Bb%C2%B2%3Dc%C2%B2%3C/text%3E%3Ctext x='150' y='120' class='equation'%3E%E2%88%91 %CE%B1%3C/text%3E%3Ctext x='40' y='170' class='equation'%3E%E2%88%82y/%E2%88%82x%3C/text%3E%3Ctext x='110' y='180' class='equation' transform='rotate(5 110 180)'%3E%CF%80 %E2%89%88 3.14%3C/text%3E%3C/svg%3E"
+      );
+      background-attachment: fixed;
+      color: var(--cream-bg);
+    }
+    h1,
+    h2,
+    h3,
+    .font-display {
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 700;
+      letter-spacing: 0.5px;
+    }
+    .text-gold {
+      color: var(--gold);
+    }
+    .placeholder {
+      background-color: rgba(0, 0, 0, 0.05);
+      border: 2px dashed rgba(0, 0, 0, 0.2);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      text-align: center;
+      color: rgba(0, 0, 0, 0.4);
+    }
+    .content-box {
+      background-color: var(--cream-bg);
+      color: var(--dark-text);
+    }
+  </style>
+</head>
+<body class="antialiased">
+  <!-- Careers Section -->
+  <section class="min-h-screen flex items-center py-24 md:py-32">
+    <div class="container mx-auto px-6">
+      <div
+        class="max-w-4xl mx-auto content-box p-8 md:p-12 rounded-2xl shadow-2xl text-dark-text"
+      >
+        <!-- PHOTO PLACEHOLDER -->
+        <div class="w-full aspect-[20/9] placeholder rounded-lg mb-8">
+          <img src="images/backgr.png" alt="Placeholder Image" />
+        </div>
+        <!-- Form Content -->
+        <div class="text-center mb-8">
+          <h1 class="text-5xl md:text-7xl font-display text-gold">
+            Have a project? Let’s talk.
+          </h1>
+        </div>
+
+        <!-- IMPORTANT: Replace YOUR_UNIQUE_ID with your actual Formspree endpoint ID -->
+        <form
+          id="careers-form"
+          action="https://formspree.io/f/YOUR_UNIQUE_ID"
+          method="POST"
+          enctype="multipart/form-data"
+          class="mt-10 max-w-2xl mx-auto"
+        >
+          <div class="grid sm:grid-cols-2 gap-6">
+            <div>
+              <label
+                for="name"
+                class="block text-sm font-medium text-gray-500"
+                >Full Name</label
+              >
+              <input
+                type="text"
+                name="name"
+                id="name"
+                required
+                class="mt-1 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-gold focus:border-gold"
+              />
+            </div>
+            <div>
+              <label
+                for="number"
+                class="block text-sm font-medium text-gray-500"
+                >Phone Number</label
+              >
+              <input
+                type="tel"
+                name="number"
+                id="number"
+                required
+                class="mt-1 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-gold focus:border-gold"
+              />
+            </div>
+          </div>
+
+          <div class="grid sm:grid-cols-2 gap-6 mt-6">
+            <div>
+              <label
+                for="email"
+                class="block text-sm font-medium text-gray-500"
+                >Email ID</label
+              >
+              <input
+                type="email"
+                name="email"
+                id="email"
+                required
+                class="mt-1 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-gold focus:border-gold"
+              />
+            </div>
+            <div>
+              <label
+                for="service-interest"
+                class="block text-sm font-medium text-gray-500"
+                >Service Looking for</label
+              >
+              <select
+                id="service-interest"
+                name="service"
+                class="mt-1 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-gold focus:border-gold"
+              >
+                <option>Curriculum & Content Creation</option>
+                <option>Online Math Tutoring</option>
+                <option>Assessment & Question Banks</option>
+                <option>Visual Math Production</option>
+                <option>Educational Website Creation</option>
+                <option>
+                  Integration of Mathematics with Computer Science (STEM)
+                </option>
+                <option>Math Expert Consulting for IT and Tech Firms</option>
+                <option>Freelance EdTech Partnership</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="mt-6">
+            <label
+              for="message"
+              class="block text-sm font-medium text-gray-500"
+              >Message</label
+            >
+            <textarea
+              name="message"
+              id="message"
+              rows="4"
+              class="mt-1 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-gold focus:border-gold"
+            ></textarea>
+          </div>
+
+          <div class="mt-10 text-center">
+            <button
+              type="submit"
+              class="bg-amber-500 text-white px-10 py-3 rounded-full font-bold text-lg hover:bg-[#0a192f] transition-all duration-300"
+            >
+              Submit Application
+            </button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <!-- EmailJS SDK -->
+  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
+  <script>
+    // Initialize EmailJS
+    (function () {
+      emailjs.init("ScBiCnhioTrfrXol6"); // Replace with your EmailJS Public Key
+    })();
+
+    // Attach submit listener to correct form ID
+    document.getElementById("careers-form").addEventListener("submit", function (e) {
+      e.preventDefault();
+
+      emailjs
+        .sendForm("service_22gwxu4", "template_vr80vte", this)
+        .then(
+          () => {
+            alert("✅ Message sent successfully!");
+            this.reset();
+          },
+          (err) => {
+            alert("❌ Failed to send message. Error: " + JSON.stringify(err));
+          }
+        );
+    });
+  </script>
+</body>
+</html>
