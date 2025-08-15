@@ -268,133 +268,7 @@
     
     <script>
     // --- App Logic ---
-    document.addEventListener('DOMContentLoaded', () => {
-        // --- Element References ---
-        const mobileMenuButton = document.getElementById("mobile-menu-button");
-        const mobileMenu = document.getElementById("mobile-menu");
-        const form = document.getElementById("careers-form");
-        const formStatus = document.getElementById("form-status");
-        const saveBtn = document.getElementById('save-progress-btn');
-        const submitBtn = document.getElementById('submit-btn');
-        const aiSummaryBox = document.getElementById('ai-summary');
-        const formFields = form.querySelectorAll('input, select, textarea');
-        const STORAGE_KEY = 'messiahMathFormProgress';
-
-        // --- Mobile Menu Toggle ---
-        mobileMenuButton.addEventListener("click", () => {
-            mobileMenu.classList.toggle("hidden");
-        });
-
-        // --- Save & Resume Logic ---
-        const saveFormProgress = () => {
-            const formData = {};
-            formFields.forEach(field => {
-                formData[field.id] = field.value;
-            });
-            localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
-            formStatus.textContent = "Progress saved!";
-            formStatus.style.color = "green";
-            setTimeout(() => formStatus.textContent = "", 2000);
-        };
-
-        const loadFormProgress = () => {
-            const savedData = localStorage.getItem(STORAGE_KEY);
-            if (savedData) {
-                const formData = JSON.parse(savedData);
-                formFields.forEach(field => {
-                    if (formData[field.id]) {
-                        field.value = formData[field.id];
-                    }
-                });
-                formStatus.textContent = "Saved progress loaded.";
-                formStatus.style.color = "blue";
-                setTimeout(() => formStatus.textContent = "", 2000);
-            }
-        };
-
-        saveBtn.addEventListener('click', saveFormProgress);
-        loadFormProgress(); // Load progress on page load
-
-        // --- AI Summary & Form Submission ---
-        form.addEventListener("submit", async (e) => {
-            e.preventDefault();
-            submitBtn.disabled = true;
-            submitBtn.textContent = 'Processing...';
-            aiSummaryBox.classList.add('hidden');
-
-            const clientName = document.getElementById('name').value;
-            const projectDetails = document.getElementById('message').value;
-            const service = document.getElementById('service-interest').value;
-            const firstDeadline = document.getElementById('first-deadline').value;
-            const budgetRange = document.getElementById('budget-range').value;
-
-            const prompt = `
-                You are a friendly confirmation assistant for Messiah Math EdTech Solutions. 
-                A client has just submitted a form. Generate a concise, personalized summary of their project request in Markdown format.
-                Start by greeting the client by name.
-                Confirm the service they selected, and make the service name bold.
-                Summarize the key details they provided in the project description.
-                If they provided a first deadline, confirm it, and make the date bold.
-                If the client selected a budget range and it's not the default 'Please select a range', confirm their selected budget.
-                End with a positive closing statement, like "We've captured these details and will be in touch soon to discuss them further."
-                
-                Client Name: "${clientName}"
-                Selected Service: "${service}"
-                Project Details: "${projectDetails}"
-                First Deadline: "${firstDeadline}"
-                Budget Range: "${budgetRange}"
-            `;
-            
-            try {
-                const apiKey = "AIzaSyBii1nFvCsjAVn87Ukizfm2e1665G4dVNc"; // API key is handled by the environment
-                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
-                
-                const payload = {
-                    contents: [{ role: "user", parts: [{ text: prompt }] }]
-                };
-
-                const response = await fetch(apiUrl, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(payload)
-                });
-
-                if (!response.ok) {
-                    throw new Error(`API request failed with status ${response.status}`);
-                }
-
-                const result = await response.json();
-                
-                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts[0].text) {
-                    let summaryText = result.candidates[0].content.parts[0].text;
-                    // Convert Markdown bold to HTML strong tags
-                    let summaryHtml = summaryText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
-                    // Convert newlines to <br> tags for proper line breaks
-                    summaryHtml = summaryHtml.replace(/\n/g, '<br>');
-                    
-                    aiSummaryBox.innerHTML = summaryHtml; // Use innerHTML to render the formatting
-                    aiSummaryBox.classList.remove('hidden');
-                    form.reset();
-                    localStorage.removeItem(STORAGE_KEY); // Clear saved data after successful submission
-                } else {
-                    throw new Error("Invalid response structure from API.");
-                }
-
-            } catch (error) {
-                console.error("Error generating summary:", error);
-                aiSummaryBox.textContent = "Thank you for your submission! We've received your details and will be in touch shortly.";
-                aiSummaryBox.style.backgroundColor = '#fef2f2';
-                aiSummaryBox.style.borderColor = '#ef4444';
-                aiSummaryBox.style.color = '#991b1b';
-                aiSummaryBox.classList.remove('hidden');
-                form.reset();
-                localStorage.removeItem(STORAGE_KEY);
-            } finally {
-                submitBtn.disabled = false;
-                submitBtn.textContent = 'Submit Application';
-            }
-        });
-    });
+    
 
     // --- Celestial Canvas Animation ---
     const canvas = document.getElementById('celestial-canvas');
@@ -587,29 +461,68 @@
     });
     </script>
 
-  
+ <script src="https://cdn.emailjs.com/dist/email.min.js"></script>
   <script>
-    // Initialize EmailJS with your user ID
-    (function () {
-      emailjs.init("ScBiCnhioTrfrXol6"); // Replace with your EmailJS Public Key
-    })();
+(function () {
+  emailjs.init("ScBiCnhioTrfrXol6"); // Your EmailJS Public Key
+})();
 
-    // Attach submit event listener to the form
-    document.getElementById("careers-form").addEventListener("submit", function (e) {
-      e.preventDefault();
+document.addEventListener("DOMContentLoaded", () => {
+  const form = document.getElementById("careers-form");
+  const submitBtn = document.getElementById("submit-btn");
+  const aiSummaryBox = document.getElementById("ai-summary");
+  const formStatus = document.getElementById("form-status");
 
-      emailjs
-        .sendForm("service_22gwxu4", "template_xl3eylz", this)
-        .then(
-          () => {
-            alert("✅ Message sent successfully!");
-            this.reset();
-          },
-          (err) => {
-            alert("❌ Failed to send message. Error: " + JSON.stringify(err));
-          }
-        );
-    });
-  </script>
+  form.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    submitBtn.disabled = true;
+    submitBtn.textContent = "Processing...";
+    aiSummaryBox.classList.add("hidden");
+
+    const clientName = document.getElementById("name").value;
+    const service = document.getElementById("service-interest").value;
+
+    const prompt = `Generate a short confirmation for ${clientName} about ${service}.`;
+
+    try {
+      // 1️⃣ AI Summary
+      const apiKey = "YOUR_GEMINI_API_KEY";
+      const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+      const payload = {
+        contents: [{ role: "user", parts: [{ text: prompt }] }]
+      };
+      const res = await fetch(apiUrl, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(payload)
+      });
+      const result = await res.json();
+
+      if (result.candidates?.length) {
+        let summaryHtml = result.candidates[0].content.parts[0].text
+          .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+          .replace(/\n/g, "<br>");
+        aiSummaryBox.innerHTML = summaryHtml;
+        aiSummaryBox.classList.remove("hidden");
+      }
+
+      // 2️⃣ Send Email
+      await emailjs.sendForm("service_22gwxu4", "template_xl3eylz", form);
+      formStatus.textContent = "✅ Message sent successfully!";
+      formStatus.style.color = "green";
+      form.reset();
+
+    } catch (err) {
+      console.error(err);
+      formStatus.textContent = "❌ Failed to send. " + err.message;
+      formStatus.style.color = "red";
+    } finally {
+      submitBtn.disabled = false;
+      submitBtn.textContent = "Submit Application";
+    }
+  });
+});
+</script>
+
 </body>
 </html>
