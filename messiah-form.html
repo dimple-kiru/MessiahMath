@@ -1,198 +1,630 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Careers - Messiah Math EdTech Solutions</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link rel="preconnect" href="https://fonts.googleapis.com" />
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap"
-    rel="stylesheet"
-  />
-  <style>
-    :root {
-      --gold: #B8860B;
-      --blue-dark: #0a192f;
-      --cream-bg: #FDFBF5;
-      --dark-text: #1f2937;
-      --light-gray: #4b5563;
-    }
-    body {
-      font-family: 'Inter', sans-serif;
-      background-color: var(--blue-dark);
-      background-image: url(
-        "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 200 200'%3E%3Cdefs%3E%3Cstyle%3E.equation %7B font-family: 'Cambria', 'Times New Roman', serif; font-size: 16px; fill: rgba(204, 214, 246, 0.08); %7D%3C/style%3E%3C/defs%3E%3Ctext x='10' y='30' class='equation'%3EE = mc%C2%B2%3C/text%3E%3Ctext x='120' y='50' class='equation' transform='rotate(-15 120 50)'%3E%E2%88%AB(x%C2%B2) dx%3C/text%3E%3Ctext x='20' y='100' class='equation' transform='rotate(10 20 100)'%3Ea%C2%B2%2Bb%C2%B2%3Dc%C2%B2%3C/text%3E%3Ctext x='150' y='120' class='equation'%3E%E2%88%91 %CE%B1%3C/text%3E%3Ctext x='40' y='170' class='equation'%3E%E2%88%82y/%E2%88%82x%3C/text%3E%3Ctext x='110' y='180' class='equation' transform='rotate(5 110 180)'%3E%CF%80 %E2%89%88 3.14%3C/text%3E%3C/svg%3E"
-      );
-      background-attachment: fixed;
-      color: var(--cream-bg);
-    }
-    h1,
-    h2,
-    h3,
-    .font-display {
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 700;
-      letter-spacing: 0.5px;
-    }
-    .text-gold {
-      color: var(--gold);
-    }
-    .placeholder {
-      background-color: rgba(0, 0, 0, 0.05);
-      border: 2px dashed rgba(0, 0, 0, 0.2);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      text-align: center;
-      color: rgba(0, 0, 0, 0.4);
-    }
-    .content-box {
-      background-color: var(--cream-bg);
-      color: var(--dark-text);
-    }
-  </style>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Careers - Messiah Math EdTech Solutions</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap"
+      rel="stylesheet"
+    />
+    <style>
+      :root {
+        --gold: #B8860B;
+        --gold-light: #FFD700;
+        --gold-shine: #FFF7E0;
+        --blue-dark: #0a192f;
+        --cream-bg: #FDFBF5;
+        --dark-text: #1f2937;
+        --light-gray: #4b5563;
+      }
+      html {
+        scroll-behavior: smooth;
+      }
+      body {
+        font-family: 'Inter', sans-serif;
+        background-color: var(--blue-dark); /* Fallback color */
+        color: var(--cream-bg);
+        overflow-x: hidden; /* Prevents horizontal scroll */
+      }
+      /* Animated Background Styles */
+      #celestial-canvas,
+      #particles-js {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0; /* Places backgrounds behind content */
+      }
+      main, header, section, footer {
+        position: relative; /* Ensures content stays above the background */
+        z-index: 1;
+      }
+      h1,
+      h2,
+      h3,
+      .font-display {
+        font-family: 'Cormorant Garamond', serif;
+        font-weight: 700;
+        letter-spacing: 0.5px;
+      }
+      .text-gold {
+        color: var(--gold);
+      }
+      .content-box {
+        background-color: var(--cream-bg);
+        color: var(--dark-text);
+        position: relative; /* Add for positioning context */
+        overflow: hidden;   /* Add to contain the overlay */
+      }
+      .placeholder-img {
+        background: linear-gradient(45deg, #1a2a45, #2a3a55);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        color: rgba(255, 255, 255, 0.3);
+        font-size: 1.25rem;
+        font-family: 'Cormorant Garamond', serif;
+      }
+      /* Styling for the AI summary box */
+      #ai-summary {
+        background-color: #eefbf3;
+        border-left: 4px solid #34d399;
+        color: #065f46;
+        padding: 1rem;
+        border-radius: 0.5rem;
+        margin-top: 1.5rem;
+        transition: opacity 0.5s;
+        text-align: left;
+        line-height: 1.6;
+      }
+      /* Custom styles for date/time inputs */
+      input[type="date"]::-webkit-calendar-picker-indicator,
+      input[type="time"]::-webkit-calendar-picker-indicator {
+          cursor: pointer;
+          filter: invert(0.6) sepia(1) saturate(5) hue-rotate(10deg);
+      }
+      /* Golden Ratio Overlay Styles */
+      .golden-spiral {
+        position: absolute;
+        width: 500px;
+        height: 500px;
+        pointer-events: none; /* Makes the overlay non-interactive */
+        opacity: 0.15; /* Increased opacity */
+        z-index: 0; /* Places it behind the form content */
+        filter: drop-shadow(0 0 5px var(--gold)); /* Add a subtle glow */
+      }
+      .golden-spiral--top-right {
+        top: -120px;
+        right: -120px;
+      }
+      .golden-spiral--bottom-left {
+        bottom: -120px;
+        left: -120px;
+        transform: rotate(180deg); /* Flips the spiral for the other corner */
+      }
+      
+      /* --- Premium Gold Shine Styles --- */
+      .text-gold-shine {
+        background: linear-gradient(145deg, var(--gold-light), var(--gold), var(--gold-light));
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+        background-size: 300% 100%;
+        animation: shine-animation 5s linear infinite;
+        text-shadow: 0 0 10px rgba(255, 215, 0, 0.5);
+      }
+      
+      @keyframes shine-animation {
+        0% { background-position: 150% 0; }
+        100% { background-position: -150% 0; }
+      }
+
+      .premium-input {
+        transition: all 0.3s ease-in-out;
+      }
+      
+      .premium-input:focus {
+        border-color: var(--gold);
+        box-shadow: 0 0 15px 3px rgba(184, 134, 11, 0.4);
+        transform: scale(1.01);
+      }
+
+      #submit-btn.premium-button {
+        background: linear-gradient(145deg, var(--gold-light), var(--gold));
+        color: var(--blue-dark);
+        font-weight: bold;
+        border: 1px solid var(--gold-light);
+        box-shadow: 0 4px 15px rgba(255, 215, 0, 0.2);
+        transition: all 0.3s ease;
+      }
+      
+      #submit-btn.premium-button:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 6px 25px rgba(255, 215, 0, 0.5);
+        filter: brightness(1.1);
+      }
+    </style>
 </head>
 <body class="antialiased">
-  <!-- Careers Section -->
-  <section class="min-h-screen flex items-center py-24 md:py-32">
-    <div class="container mx-auto px-6">
-      <div
-        class="max-w-4xl mx-auto content-box p-8 md:p-12 rounded-2xl shadow-2xl text-dark-text"
-      >
-        <!-- PHOTO PLACEHOLDER -->
-        <div class="w-full aspect-[20/9] placeholder rounded-lg mb-8">
-          <img src="images/backgr.png" alt="Placeholder Image" />
+    <!-- Animated Background Canvases -->
+    <canvas id="celestial-canvas"></canvas>
+    <div id="particles-js"></div>
+
+    <!-- Header -->
+    <header class="bg-blue-dark/80 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300 border-b border-gray-800" id="page-header">
+      <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#hero" class="flex items-center space-x-3">
+          <span class="text-xl font-display text-white">Messiah Math EdTech Solutions</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="index.html" class="text-white hover:text-gold transition text-lg">Home</a>
+          <a href="careers.html" class="text-white hover:text-gold transition text-lg">Careers</a>
+            <a href="schools.html" class="text-white hover:text-gold transition text-lg">Service for School</a>
+          <a href="contact.html" class="text-white hover:text-gold transition text-lg">Connect</a>
         </div>
-        <!-- Form Content -->
-        <div class="text-center mb-8">
-          <h1 class="text-5xl md:text-7xl font-display text-gold">
-            Have a project? Let’s talk.
-          </h1>
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="text-white focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
         </div>
-
-        <!-- IMPORTANT: Replace YOUR_UNIQUE_ID with your actual Formspree endpoint ID -->
-        <form
-          id="careers-form"
-          action="https://formspree.io/f/YOUR_UNIQUE_ID"
-          method="POST"
-          enctype="multipart/form-data"
-          class="mt-10 max-w-2xl mx-auto"
-        >
-          <div class="grid sm:grid-cols-2 gap-6">
-            <div>
-              <label
-                for="name"
-                class="block text-sm font-medium text-gray-500"
-                >Full Name</label
-              >
-              <input
-                type="text"
-                name="name"
-                id="name"
-                required
-                class="mt-1 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-gold focus:border-gold"
-              />
-            </div>
-            <div>
-              <label
-                for="number"
-                class="block text-sm font-medium text-gray-500"
-                >Phone Number</label
-              >
-              <input
-                type="tel"
-                name="number"
-                id="number"
-                required
-                class="mt-1 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-gold focus:border-gold"
-              />
-            </div>
-          </div>
-
-          <div class="grid sm:grid-cols-2 gap-6 mt-6">
-            <div>
-              <label
-                for="email"
-                class="block text-sm font-medium text-gray-500"
-                >Email ID</label
-              >
-              <input
-                type="email"
-                name="email"
-                id="email"
-                required
-                class="mt-1 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-gold focus:border-gold"
-              />
-            </div>
-            <div>
-              <label
-                for="service-interest"
-                class="block text-sm font-medium text-gray-500"
-                >Service Looking for</label
-              >
-              <select
-                id="service-interest"
-                name="service"
-                class="mt-1 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-gold focus:border-gold"
-              >
-                <option>Curriculum & Content Creation</option>
-                <option>Online Math Tutoring</option>
-                <option>Assessment & Question Banks</option>
-                <option>Visual Math Production</option>
-                <option>Educational Website Creation</option>
-                <option>
-                  Integration of Mathematics with Computer Science (STEM)
-                </option>
-                <option>Math Expert Consulting for IT and Tech Firms</option>
-                <option>Freelance EdTech Partnership</option>
-                <option>Other</option>
-              </select>
-            </div>
-          </div>
-
-          <div class="mt-6">
-            <label
-              for="message"
-              class="block text-sm font-medium text-gray-500"
-              >Message</label
-            >
-            <textarea
-              name="message"
-              id="message"
-              rows="4"
-              class="mt-1 block w-full bg-gray-50 border border-gray-300 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-gold focus:border-gold"
-            ></textarea>
-          </div>
-
-          <div class="mt-10 text-center">
-            <button
-              type="submit"
-              class="bg-amber-500 text-white px-10 py-3 rounded-full font-bold text-lg hover:bg-[#0a192f] transition-all duration-300"
-            >
-              Submit Application
-            </button>
-          </div>
-        </form>
+      </nav>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-black/90 px-6 pb-4 flex flex-col space-y-2">
+          <a href="index.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Home</a>
+          <a href="careers.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Careers</a>
+          <a href="schools.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Service for School</a>
+          <a href="contact.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Connect</a>
       </div>
-    </div>
-  </section>
+    </header>
 
-  <!-- EmailJS SDK -->
-  <script src="https://cdn.jsdelivr.net/npm/emailjs-com@2/dist/email.min.js"></script>
-  <script>
-    // Initialize EmailJS
+    <!-- Main Content -->
+    <main>
+      <section class="min-h-screen flex items-center py-24 md:py-32">
+        <div class="container mx-auto px-6">
+          <div class="max-w-4xl mx-auto content-box p-8 md:p-12 rounded-2xl shadow-2xl text-dark-text">
+            
+            <!-- Golden Ratio Overlay Elements -->
+            <div class="golden-spiral golden-spiral--top-right">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 61.8,100 A 61.8,61.8 0 0 1 0,38.2 A 38.2,38.2 0 0 1 38.2,0 A 23.6,23.6 0 0 1 61.8,23.6 A 14.6,14.6 0 0 1 47.2,38.2 A 9,9 0 0 1 56.2,47.2 A 5.6,5.6 0 0 1 50.6,41.6 A 3.4,3.4 0 0 1 54,45" stroke="var(--gold)" stroke-width="1.5"/>
+                </svg>
+            </div>
+            <div class="golden-spiral golden-spiral--bottom-left">
+                <svg viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                    <path d="M 61.8,100 A 61.8,61.8 0 0 1 0,38.2 A 38.2,38.2 0 0 1 38.2,0 A 23.6,23.6 0 0 1 61.8,23.6 A 14.6,14.6 0 0 1 47.2,38.2 A 9,9 0 0 1 56.2,47.2 A 5.6,5.6 0 0 1 50.6,41.6 A 3.4,3.4 0 0 1 54,45" stroke="var(--gold)" stroke-width="1.5"/>
+                </svg>
+            </div>
+            
+            <div class="w-full aspect-[20/9] rounded-lg mb-8 overflow-hidden placeholder-img">
+              <img src="images/backgr.png"
+       alt="Placeholder Image"
+       class="w-full h-full object-cover outline-none border-none" />
+            </div>
+            <div class="text-center mb-8">
+              <h1 class="text-5xl md:text-7xl font-display text-gold-shine">
+                Have a project? Let’s talk.
+              </h1>
+            </div>
+            <form id="careers-form" class="mt-10 max-w-2xl mx-auto relative z-10">
+
+               <div class="grid sm:grid-cols-2 gap-6">
+                <div>
+                  <label for="organisation" class="block text-sm font-medium text-gray-500">Name of the Organisation</label>
+                  <input type="text" name="organisation" id="organisation" required class="premium-input mt-1 block w-full bg-gray-50 border-2 border-amber-500/50 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors"  placeholder="school/institutions/Individual..."/>
+                </div>
+                <div>
+                  <label for="role" class="block text-sm font-medium text-gray-500">Role</label>
+                  <input type="text" name="role" id="role" required class="premium-input mt-1 block w-full bg-gray-50 border-2 border-amber-500/50 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" placeholder='position...'/>
+                </div>
+              </div>
+
+              <div class="grid sm:grid-cols-2 gap-6 mt-6">
+                <div>
+                  <label for="name" class="block text-sm font-medium text-gray-500">Full Name</label>
+                  <input type="text" name="name" id="name" required class="premium-input mt-1 block w-full bg-gray-50 border-2 border-amber-500/50 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" />
+                </div>
+                <div>
+                  <label for="number" class="block text-sm font-medium text-gray-500">Phone Number</label>
+                  <input type="tel" name="number" id="number" required class="premium-input mt-1 block w-full bg-gray-50 border-2 border-amber-500/50 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" />
+                </div>
+              </div>
+              <div class="grid sm:grid-cols-2 gap-6 mt-6">
+                <div>
+                  <label for="email" class="block text-sm font-medium text-gray-500">Email ID</label>
+                  <input type="email" name="email" id="email" required class="premium-input mt-1 block w-full bg-gray-50 border-2 border-amber-500/50 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" />
+                </div>
+                <div>
+                  <label for="service-interest" class="block text-sm font-medium text-gray-500">Service Looking for</label>
+                  <select id="service-interest" name="service" class="premium-input mt-1 block w-full bg-gray-50 border-2 border-amber-500/50 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors">
+                    <option>Curriculum & Content Creation</option>
+                    <option>Online Math Tutoring</option>
+                    <option>Assessment & Question Banks</option>
+                    <option>Visual Math Production</option>
+                    <option>Educational Website Creation</option>
+                    <option>Integration of Mathematics with Computer Science (STEM)</option>
+                    <option>Math Expert Consulting for IT and Tech Firms</option>
+                    <option>Freelance EdTech Partnership</option>
+                    <option>Other</option>
+                  </select>
+                </div>
+              </div>
+              <!-- Budget Range Selector -->
+              <div class="mt-6">
+                <label for="budget-range" class="block text-sm font-medium text-gray-500">Budget Range (Optional)</label>
+                <select id="budget-range" name="budget" class="premium-input mt-1 block w-full bg-gray-50 border-2 border-amber-500/50 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors">
+                  <option>Please select a range</option>
+                  <option>Up to ₹50,000</option>
+                  <option>₹50,000 - ₹1,00,000</option>
+                  <option>₹1,00,000 - ₹2,50,000</option>
+                  <option>₹2,50,000 - ₹5,00,000</option>
+                  <option>₹5,00,000+</option>
+                </select>
+              </div>
+              <!-- First Deadline Field -->
+              <div class="mt-6">
+                  <label for="first-deadline" class="block text-sm font-medium text-gray-500">First Deadline</label>
+                  <input type="date" name="first-deadline" id="first-deadline" class="premium-input mt-1 block w-full bg-gray-50 border-2 border-amber-500/50 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" />
+              </div>
+              <div class="mt-6">
+                <label for="message" class="block text-sm font-medium text-gray-500">Project Details</label>
+                <textarea name="message" id="message" rows="4" class="premium-input mt-1 block w-full bg-gray-50 border-2 border-amber-500/50 rounded-md shadow-sm py-3 px-4 text-gray-700 focus:outline-none focus:ring-2 focus:ring-amber-500 focus:border-amber-500 transition-colors" placeholder="Describe your project, scope and goals..."></textarea>
+              </div>
+              <div class="mt-10 text-center flex flex-col sm:flex-row justify-center items-center gap-4">
+                <button type="button" id="save-progress-btn" class="bg-gray-600 text-white px-10 py-3 rounded-full font-bold text-lg hover:bg-gray-700 transition-all duration-300 w-full sm:w-auto">
+                  Save Progress
+                </button>
+                <button type="submit" id="submit-btn" class="premium-button text-white px-10 py-3 rounded-full font-bold text-lg w-full sm:w-auto">
+                  Submit Application
+                </button>
+              </div>
+            </form>
+             <div id="form-status" class="mt-6 text-center font-semibold"></div>
+             <div id="ai-summary" class="hidden"></div>
+          </div>
+        </div>
+      </section>
+    </main>
+
+    <!-- Scripts Section -->
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    
+    <script>
+    // --- App Logic ---
+    document.addEventListener('DOMContentLoaded', () => {
+        // --- Element References ---
+        const mobileMenuButton = document.getElementById("mobile-menu-button");
+        const mobileMenu = document.getElementById("mobile-menu");
+        const form = document.getElementById("careers-form");
+        const formStatus = document.getElementById("form-status");
+        const saveBtn = document.getElementById('save-progress-btn');
+        const submitBtn = document.getElementById('submit-btn');
+        const aiSummaryBox = document.getElementById('ai-summary');
+        const formFields = form.querySelectorAll('input, select, textarea');
+        const STORAGE_KEY = 'messiahMathFormProgress';
+
+        // --- Mobile Menu Toggle ---
+        mobileMenuButton.addEventListener("click", () => {
+            mobileMenu.classList.toggle("hidden");
+        });
+
+        // --- Save & Resume Logic ---
+        const saveFormProgress = () => {
+            const formData = {};
+            formFields.forEach(field => {
+                formData[field.id] = field.value;
+            });
+            localStorage.setItem(STORAGE_KEY, JSON.stringify(formData));
+            formStatus.textContent = "Progress saved!";
+            formStatus.style.color = "green";
+            setTimeout(() => formStatus.textContent = "", 2000);
+        };
+
+        const loadFormProgress = () => {
+            const savedData = localStorage.getItem(STORAGE_KEY);
+            if (savedData) {
+                const formData = JSON.parse(savedData);
+                formFields.forEach(field => {
+                    if (formData[field.id]) {
+                        field.value = formData[field.id];
+                    }
+                });
+                formStatus.textContent = "Saved progress loaded.";
+                formStatus.style.color = "blue";
+                setTimeout(() => formStatus.textContent = "", 2000);
+            }
+        };
+
+        saveBtn.addEventListener('click', saveFormProgress);
+        loadFormProgress(); // Load progress on page load
+
+        // --- AI Summary & Form Submission ---
+        form.addEventListener("submit", async (e) => {
+            e.preventDefault();
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Processing...';
+            aiSummaryBox.classList.add('hidden');
+
+            const clientName = document.getElementById('name').value;
+            const projectDetails = document.getElementById('message').value;
+            const service = document.getElementById('service-interest').value;
+            const firstDeadline = document.getElementById('first-deadline').value;
+            const budgetRange = document.getElementById('budget-range').value;
+
+            const prompt = `
+                You are a friendly confirmation assistant for Messiah Math EdTech Solutions. 
+                A client has just submitted a form. Generate a concise, personalized summary of their project request in Markdown format.
+                Start by greeting the client by name.
+                Confirm the service they selected, and make the service name bold.
+                Summarize the key details they provided in the project description.
+                If they provided a first deadline, confirm it, and make the date bold.
+                If the client selected a budget range and it's not the default 'Please select a range', confirm their selected budget.
+                End with a positive closing statement, like "We've captured these details and will be in touch soon to discuss them further."
+                
+                Client Name: "${clientName}"
+                Selected Service: "${service}"
+                Project Details: "${projectDetails}"
+                First Deadline: "${firstDeadline}"
+                Budget Range: "${budgetRange}"
+            `;
+            
+            try {
+                const apiKey = "AIzaSyBii1nFvCsjAVn87Ukizfm2e1665G4dVNc"; // API key is handled by the environment
+                const apiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-05-20:generateContent?key=${apiKey}`;
+                
+                const payload = {
+                    contents: [{ role: "user", parts: [{ text: prompt }] }]
+                };
+
+                const response = await fetch(apiUrl, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(payload)
+                });
+
+                if (!response.ok) {
+                    throw new Error(`API request failed with status ${response.status}`);
+                }
+
+                const result = await response.json();
+                
+                if (result.candidates && result.candidates.length > 0 && result.candidates[0].content.parts[0].text) {
+                    let summaryText = result.candidates[0].content.parts[0].text;
+                    // Convert Markdown bold to HTML strong tags
+                    let summaryHtml = summaryText.replace(/\*\*(.*?)\*\*/g, '<strong>$1</strong>');
+                    // Convert newlines to <br> tags for proper line breaks
+                    summaryHtml = summaryHtml.replace(/\n/g, '<br>');
+                    
+                    aiSummaryBox.innerHTML = summaryHtml; // Use innerHTML to render the formatting
+                    aiSummaryBox.classList.remove('hidden');
+                    form.reset();
+                    localStorage.removeItem(STORAGE_KEY); // Clear saved data after successful submission
+                } else {
+                    throw new Error("Invalid response structure from API.");
+                }
+
+            } catch (error) {
+                console.error("Error generating summary:", error);
+                aiSummaryBox.textContent = "Thank you for your submission! We've received your details and will be in touch shortly.";
+                aiSummaryBox.style.backgroundColor = '#fef2f2';
+                aiSummaryBox.style.borderColor = '#ef4444';
+                aiSummaryBox.style.color = '#991b1b';
+                aiSummaryBox.classList.remove('hidden');
+                form.reset();
+                localStorage.removeItem(STORAGE_KEY);
+            } finally {
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Submit Application';
+            }
+        });
+    });
+
+    // --- Celestial Canvas Animation ---
+    const canvas = document.getElementById('celestial-canvas');
+    const ctx = canvas.getContext('2d');
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    resizeCanvas();
+    window.addEventListener('resize', () => {
+        resizeCanvas();
+        init();
+    });
+
+    let particles = [];
+    let equations = [];
+
+    const mathEquations = [
+        'E = mc²', '∫ f(x) dx', 'a²+b²=c²', '∑ α', '∂y/∂x', 'Γ(z) = ∫ e⁻ᵗtᶻ⁻¹ dt',
+        '∇ × B = μ₀J', 'F = G(m₁m₂/r²)', 'sin²θ + cos²θ = 1', 'e^(iπ) + 1 = 0'
+    ];
+
+    class Particle {
+        constructor(type) {
+            this.type = type;
+            this.reset();
+        }
+        reset() {
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+        
+            if (this.type === 'star') {
+                this.size = Math.random() * 1.5 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.05;
+                this.speedY = (Math.random() - 0.5) * 0.05;
+                this.opacity = Math.random() * 0.5 + 0.3;
+                this.color = Math.random() > 0.1
+                    ? `rgba(234, 179, 8, ${this.opacity})`
+                    : `rgba(204, 214, 246, ${this.opacity})`;
+            } else if (this.type === 'nebula') {
+                this.size = Math.random() * 200 + 100;
+                this.speedX = (Math.random() - 0.5) * 0.02;
+                this.speedY = (Math.random() - 0.5) * 0.02;
+                this.opacity = Math.random() * 0.05 + 0.02;
+                this.color = Math.random() > 0.5
+                    ? `rgba(119, 44, 232, ${this.opacity})`
+                    : `rgba(29, 78, 216, ${this.opacity})`;
+            } else if (this.type === 'shootingStar') {
+                this.x = Math.random() * canvas.width;
+                this.y = -20;
+                this.size = Math.random() * 2 + 1;
+                // Slower, more gentle speed for shooting stars
+                const baseSpeed = Math.random() * 0.2 + 0.1; 
+                this.speedX = baseSpeed;
+                this.speedY = baseSpeed * 0.5;
+                this.opacity = 1;
+                this.life = 0;
+                this.maxLife = 500; // Increased life for a longer trail
+                this.trail = [];
+            }
+        }
+        draw() {
+            ctx.beginPath();
+            if (this.type === 'nebula') {
+                const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+                gradient.addColorStop(0, this.color);
+                gradient.addColorStop(1, this.color.replace(/[\d.]+\)$/, '0)'));
+                ctx.fillStyle = gradient;
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+            } else {
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fillStyle = this.color;
+                ctx.shadowColor = 'rgba(234, 179, 8, 0.8)';
+                ctx.shadowBlur = 15;
+            }
+            ctx.fill();
+            ctx.shadowBlur = 0;
+
+            if (this.type === 'shootingStar' && this.trail.length > 1) {
+                ctx.beginPath();
+                ctx.moveTo(this.trail[0].x, this.trail[0].y);
+                for (let i = 1; i < this.trail.length; i++) {
+                    ctx.lineTo(this.trail[i].x, this.trail[i].y);
+                }
+                ctx.strokeStyle = `rgba(255, 223, 150, ${this.opacity * 0.3})`;
+                ctx.lineWidth = this.size * 0.8;
+                ctx.stroke();
+            }
+        }
+        update() {
+            this.x += this.speedX;
+            this.y += this.speedY;
+
+            if (this.x < -this.size * 2 || this.x > canvas.width + this.size * 2 ||
+                this.y < -this.size * 2 || this.y > canvas.height + this.size * 2) {
+                if(this.type !== 'shootingStar') this.reset();
+            }
+            
+            if (this.type === 'shootingStar') {
+                this.life++;
+                if (this.life > this.maxLife) this.reset();
+                this.trail.unshift({ x: this.x, y: this.y });
+                if (this.trail.length > 15) this.trail.pop();
+            }
+
+            this.draw();
+        }
+    }
+
+    class Equation {
+        constructor() { this.reset(); }
+        reset() {
+            this.text = mathEquations[Math.floor(Math.random() * mathEquations.length)];
+            this.life = 0;
+            this.maxLife = 300;
+            this.opacity = 0;
+            this.x = Math.random() * canvas.width;
+            this.y = Math.random() * canvas.height;
+        }
+        draw() {
+            ctx.font = '20px Cormorant Garamond';
+            ctx.fillStyle = `rgba(234, 179, 8, ${this.opacity})`;
+            ctx.shadowColor = 'rgba(234, 179, 8, 0.8)';
+            ctx.shadowBlur = 10;
+            ctx.fillText(this.text, this.x, this.y);
+            ctx.shadowBlur = 0;
+        }
+        update() {
+            this.life++;
+            if (this.life < 100) this.opacity = Math.min(1, this.opacity + 0.01);
+            else if (this.life > this.maxLife - 100) this.opacity = Math.max(0, this.opacity - 0.01);
+            if (this.life >= this.maxLife) this.reset();
+            this.draw();
+        }
+    }
+
+    function init() {
+        particles = [];
+        equations = [];
+        const numStars = (canvas.width * canvas.height) / 9000;
+        for (let i = 0; i < 5; i++) particles.push(new Particle('nebula'));
+        for (let i = 0; i < numStars; i++) particles.push(new Particle('star'));
+        for (let i = 0; i < 2; i++) particles.push(new Particle('shootingStar'));
+        for (let i = 0; i < 4; i++) equations.push(new Equation());
+    }
+
+    function animate() {
+        ctx.fillStyle = 'rgba(10, 25, 47, 0.12)';
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+        particles.forEach(p => p.update());
+        equations.forEach(e => e.update());
+        
+        // Lowered frequency for new shooting stars
+        if (Math.random() < 0.001) {
+            const activeShootingStars = particles.filter(p => p.type === 'shootingStar').length;
+            if (activeShootingStars < 3) { // Limit concurrent shooting stars
+                 particles.push(new Particle('shootingStar'));
+            }
+        }
+        requestAnimationFrame(animate);
+    }
+
+    init();
+    animate();
+
+    // --- Particles.js Initialization ---
+    particlesJS("particles-js", {
+        "particles": {
+            "number": { "value": 60, "density": { "enable": true, "value_area": 800 } },
+            "color": { "value": ["#FFD700", "#FFFFFF", "#B8860B"] },
+            "shape": { "type": "circle" },
+            "opacity": { "value": 0.8, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
+            "size": { "value": 2.5, "random": true, "anim": { "enable": true, "speed": 2, "size_min": 0.5, "sync": false } },
+            "line_linked": { "enable": true, "distance": 150, "color": "#EAB308", "opacity": 0.4, "width": 1 },
+            "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": true, "rotateX": 600, "rotateY": 1200 } }
+        },
+        "interactivity": {
+            "detect_on": "canvas",
+            "events": { "onhover": { "enable": true, "mode": "repulse" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+            "modes": {
+                "grab": { "distance": 200, "line_linked": { "opacity": 1 } },
+                "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 },
+                "repulse": { "distance": 150, "duration": 0.4 },
+                "push": { "particles_nb": 4 },
+                "remove": { "particles_nb": 2 }
+            }
+        },
+        "retina_detect": true
+    });
+    </script>
+
+    <script>
+    // Initialize EmailJS with your user ID
     (function () {
       emailjs.init("ScBiCnhioTrfrXol6"); // Replace with your EmailJS Public Key
     })();
 
-    // Attach submit listener to correct form ID
+    // Attach submit event listener to the form
     document.getElementById("careers-form").addEventListener("submit", function (e) {
       e.preventDefault();
 
       emailjs
-        .sendForm("service_22gwxu4", "template_vr80vte", this)
+        .sendForm("service_22gwxu4", "template_xl3eylz", this)
         .then(
           () => {
             alert("✅ Message sent successfully!");

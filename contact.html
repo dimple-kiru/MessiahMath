@@ -10,28 +10,51 @@
     <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@600;700&family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
     <style>
         :root {
-            --gold: #B8860B;
+            --gold: #B8860B; /* A rich, dark gold color */
             --blue-dark: #0a192f;
             --cream-bg: #FDFBF5;
             --dark-text: #1f2937;
             --light-gray: #4b5563;
         }
-        
-        /* --- PREMIUM DARK BLUE BACKGROUND WITH WHITE EQUATIONS --- */
-        body {
+        body, html {
+            margin: 0;
+            padding: 0;
+            overflow-x: hidden;
+            width: 100%;
             font-family: 'Inter', sans-serif;
             background-color: var(--blue-dark);
-            /* This SVG code creates the subtle, premium equation pattern */
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300' viewBox='0 0 200 200'%3E%3Cdefs%3E%3Cstyle%3E.equation %7B font-family: 'Cambria', 'Times New Roman', serif; font-size: 16px; fill: rgba(204, 214, 246, 0.08); %7D%3C/style%3E%3C/defs%3E%3Ctext x='10' y='30' class='equation'%3EE = mc²%3C/text%3E%3Ctext x='120' y='50' class='equation' transform='rotate(-15 120 50)'%3E∫(x²) dx%3C/text%3E%3Ctext x='20' y='100' class='equation' transform='rotate(10 20 100)'%3Ea²+b²=c²%3C/text%3E%3Ctext x='150' y='120' class='equation'%3E∑ α%3C/text%3E%3Ctext x='40' y='170' class='equation'%3E∂y/∂x%3C/text%3E%3Ctext x='110' y='180' class='equation' transform='rotate(5 110 180)'%3Eπ ≈ 3.14%3C/text%3E%3C/svg%3E");
-            background-attachment: fixed;
         }
-
+        #celestial-canvas, #particles-js {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+        }
+        #celestial-canvas { z-index: 1; }
+        #particles-js { z-index: 2; }
+        
+        .content-wrapper {
+            position: relative;
+            z-index: 3;
+        }
         h1, h2, h3, .font-display {
             font-family: 'Cormorant Garamond', serif;
             font-weight: 700;
             letter-spacing: 0.5px;
         }
-        .text-gold { color: var(--gold); }
+        .text-gold {  
+            background: linear-gradient(90deg, #d4af37, #ffd700, #d4af37);
+            background-size: 200% auto;
+            color: transparent;
+            background-clip: text;
+            -webkit-background-clip: text;
+            animation: shine 3s linear infinite;
+        }
+        .content-box {
+            background-color: var(--cream-bg);
+            color: var(--dark-text);
+        }
         .placeholder {
             background-color: rgba(0, 0, 0, 0.05);
             border: 2px dashed rgba(0, 0, 0, 0.2);
@@ -41,59 +64,315 @@
             text-align: center;
             color: rgba(0, 0, 0, 0.4);
         }
+
+        h1.connect-heading,  h3.connect-heading,  p.connect-heading{
+    font-family: 'Cormorant Garamond', serif;
+    font-weight: 700;
+         /* adds a graceful curve to letters */
+    letter-spacing: 2px;          /* more breathing room between characters */
+    line-height: 1.2;
+    text-transform: none;         /* keep your natural casing */
+    background: linear-gradient(90deg, #d4af37, #ffd700, #d4af37);
+    background-size: 400% auto;   /* extra width for smoother travel */
+    color: transparent;
+    background-clip: text;
+    -webkit-background-clip: text;
+    animation: smooth-shine 8s ease-in-out infinite;
+}
+
+@keyframes smooth-shine {
+    0%   { background-position: 0% center; }
+    50%  { background-position: 100% center; }
+    100% { background-position: 0% center; }
+}
+
         
-        .content-box {
-            background-color: var(--cream-bg);
-            color: var(--dark-text);
-        }
     </style>
 </head>
 <body class="antialiased">
 
-    <!-- Connect With Us Section -->
-    <section class="min-h-screen flex items-center py-24 md:py-32">
-        <div class="container mx-auto px-6">
-            <div class="grid lg:grid-cols-2 gap-12 md:gap-16 items-center content-box p-8 md:p-12 rounded-2xl shadow-2xl">
-                <!-- Left Column: Text Content -->
-                <div class="text-center lg:text-left">
-                    <h1 class="text-5xl md:text-7xl font-display text-gold">Connect With Us</h1>
-                    <div class="mt-8 text-lg text-light-gray leading-relaxed space-y-4">
-                        <p>
-                            Messiah Math EdTech Solutions is a collaborative freelancing platform, led by Gayathri Vijayan, Sr. SME – Mathematics, delivering high-quality mathematics content, curriculum design, and academic solutions. We combine the flexibility of individual freelance expertise with the efficiency of a specialized project team.
-                        </p>
-                        <p>
-                            I am personally available as a freelancer for individual assignments, and I also lead a multi-expert team for large-scale projects. Whether you require focused one-on-one expertise or the combined strengths of our team, we adapt our approach to match your goals, ensuring precision, creativity, and timely delivery.
-                        </p>
+    <!-- Live Animation Layers -->
+    <canvas id="celestial-canvas"></canvas>
+    <div id="particles-js"></div>
+
+    <!-- Content Wrapper -->
+    <div class="content-wrapper">
+          <!-- Header -->
+    <header class="bg-blue-dark/80 backdrop-blur-sm sticky top-0 z-50 transition-all duration-300 border-b border-gray-800" id="page-header">
+      <nav class="container mx-auto px-6 py-4 flex justify-between items-center">
+        <a href="#hero" class="flex items-center space-x-3">
+          <span class="text-xl font-display text-white">Messiah Math EdTech Solutions</span>
+        </a>
+        <div class="hidden md:flex items-center space-x-8">
+          <a href="index.html" class="text-white hover:text-gold transition text-lg">Home</a>
+          <a href="careers.html" class="text-white hover:text-gold transition text-lg">Careers</a>
+          <a href="schools.html" class="text-white hover:text-gold transition text-lg">Service for School</a>
+          <a href="contact.html" class="text-white hover:text-gold transition text-lg">Connect</a>          
+        </div>
+        <div class="md:hidden">
+          <button id="mobile-menu-button" class="text-white focus:outline-none">
+            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+          </button>
+        </div>
+      </nav>
+      <!-- Mobile Menu -->
+      <div id="mobile-menu" class="hidden md:hidden bg-black/90 px-6 pb-4 flex flex-col space-y-2">
+          <a href="index.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Home</a>
+          <a href="careers.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Careers</a>
+          <a href="schools.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Service for School</a>
+          <a href="contact.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Connect</a>
+      </div>
+    </header>
+
+        <!-- Connect With Us Section -->
+      
+   <section class="min-h-screen pt-0 pb-24 md:pt-0 md:pb-32">
+            <div class="container mx-auto px-6">
+                <div class="max-w-4xl mx-auto content-box p-8 md:p-12 rounded-2xl shadow-2xl">
+                    <div class="text-center">
+                        <h1 class="connect-heading text-5xl md:text-7xl font-display text-gold">Connect With Us</h1>
+                        <div class="mt-8 text-lg text-light-gray leading-relaxed space-y-4 max-w-2xl mx-auto">
+                            <p>
+                                Messiah Math EdTech Solutions is a collaborative freelancing platform, led by Gayathri Vijayan, Sr. SME – Mathematics, delivering high-quality mathematics content, curriculum design, and academic solutions. We combine the flexibility of individual freelance expertise with the efficiency of a specialized project team.
+                            </p>
+                            <p>
+                                I am personally available as a freelancer for individual assignments, and I also lead a multi-expert team for large-scale projects. Whether you require focused one-on-one expertise or the combined strengths of our team, we adapt our approach to match your goals, ensuring precision, creativity, and timely delivery.
+                            </p>
+                        </div>
                     </div>
-                </div>
 
-                <!-- Right Column: Image and Social Links -->
-                <div class="flex flex-col items-center justify-center">
-                    <h3 class="text-3xl font-display text-dark-text mb-4">Let's talk....</h3>
-                    <p class="text-2xl font-display text-gold mb-4 text-center">"You're Just an Equation away to get our solutions!"</p>
+                    <div class="mt-12 flex flex-col items-center justify-center">
+                        <p class="connect-heading text-2xl font-display text-gold mb-4 text-center">"You're Just an Equation away to get our solutions!"</p>
+                        
+                        <div class="w-full aspect-[16/9]  rounded-lg overflow-hidden">
+                             <img src="images/contact-backgr.jpeg" 
+       alt="Connect with us"
+       class="w-full h-full object-cover outline-none border-none" /> 
+                        </div>
+                        
+                        <h3 class="connect-heading text-3xl font-display text-gold mb-6 text-center">To schedule a meeting: Pick a time below!</h3>
+
+                        <div class="calendly-inline-widget w-full rounded-lg overflow-hidden" data-url="https://calendly.com/gayathri-vijayan/30min" style="min-width:320px;height:700px;"></div>
+
+                        <!-- === UPDATED CONTACT & SOCIALS SECTION === -->
+                        <div class="w-full mt-12 pt-8 border-t border-gray-300 text-center">
+                            <!-- Google Meet Info -->
+                            <div class="mb-8">
+                                <p class="text-lg text-light-gray mb-4">All meetings are conducted via Google Meet</p>
+                                <div class="inline-flex items-center justify-center w-20 h-20 bg-gray-100 rounded-full">
+                                    <!-- === UPDATED: Accurate Google Meet Icon === -->
+                                   <img src = "images/google.png">
+                                </div>
+                            </div>
                     
-                    <div class="w-full h-auto aspect-rectangle max-w-xl placeholder rounded-lg overflow-hidden">
-    <img src="images/contact-backgr.jpeg" 
-         class="w-full h-full object-cover" 
-         alt="Connect with us"/> 
-</div>
-
-                    <!-- SOCIAL ICONS -->
-                    <div class="mt-8 flex justify-center space-x-8">
-                        <a href="https://wa.me/qr/BZES76NBQTLJG1" target="_blank" class="text-green-500 transition" aria-label="WhatsApp">
-                           <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.902-.539-5.587-1.52l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.451-4.437-9.887-9.888-9.888-5.452 0-9.888 4.436-9.889 9.888.001 2.268.809 4.322 2.251 5.961l-.234 1.424 1.432-.231z"/></svg>
-                        </a>
-                        <a href="https://www.instagram.com/messiahmathedtechsolutions?utm_source=qr&igsh=MTVsbDg1dHRoY2l4bw==" target="_blank" class="text-pink-500 transition" aria-label="Instagram">
-                           <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919 4.919 1.266-.058 1.644-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg>
-                        </a>
+                            <!-- Social Icons -->
+                            <div class="flex justify-center space-x-8">
+                                <a href="https://wa.me/qr/BZES76NBQTLJG1" target="_blank" class="text-green-500 transition hover:opacity-80" aria-label="WhatsApp">
+                                   <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24"><path d="M.057 24l1.687-6.163c-1.041-1.804-1.588-3.849-1.587-5.946.003-6.556 5.338-11.891 11.893-11.891 3.181.001 6.167 1.24 8.413 3.488 2.245 2.248 3.481 5.236 3.48 8.414-.003 6.557-5.338 11.892-11.894 11.892-1.99 0-3.902-.539-5.587-1.52l-6.305 1.654zm6.597-3.807c1.676.995 3.276 1.591 5.392 1.592 5.448 0 9.886-4.434 9.889-9.885.002-5.451-4.437-9.887-9.888-9.888-5.452 0-9.888 4.436-9.889 9.888.001 2.268.809 4.322 2.251 5.961l-.234 1.424 1.432-.231z"/></svg>
+                                </a>
+                                <a href="https://www.instagram.com/messiahmathedtechsolutions?utm_source=qr&igsh=MTVsbDg1dHRoY2l4bw==" target="_blank" class="text-pink-500 transition hover:opacity-80" aria-label="Instagram">
+                                   <svg class="w-12 h-12" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.85s-.011 3.584-.069 4.85c-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07s-3.584-.012-4.85-.07c-3.252-.148-4.771-1.691-4.919-4.919-.058-1.265-.069-1.645-.069-4.85s.011-3.584.069-4.85c.149-3.225 1.664-4.771 4.919 4.919 1.266-.058 1.644-.07 4.85-.07zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948s.014 3.667.072 4.947c.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072s3.667-.014 4.947-.072c4.358-.2 6.78-2.618 6.98-6.98.059-1.281.073-1.689.073-4.948s-.014-3.667-.072-4.947c-.2-4.358-2.618-6.78-6.98-6.98-1.281-.059-1.689-.073-4.948-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.162 6.162 6.162 6.162-2.759 6.162-6.162-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4s1.791-4 4-4 4 1.79 4 4-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44 1.441-.645 1.441-1.44-.645-1.44-1.441-1.44z"/></svg>
+                                </a>
+                            </div>
+                        </div>
                     </div>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
+    </div>
 
-</body>
+    <script type="text/javascript" src="https://assets.calendly.com/assets/external/widget.js" async></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <script>
+        // --- SCRIPT FOR CELESTIAL TAPESTRY (LAYER 1) ---
+        const canvas = document.getElementById('celestial-canvas');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
+        let particles = [];
+        let equations = [];
+        
+        const mathEquations = [
+            'E = mc²', '∫ f(x) dx', 'a²+b²=c²', '∑ α', '∂y/∂x', 'Γ(z) = ∫ e⁻ᵗtᶻ⁻¹ dt',
+            '∇ × B = μ₀J', 'F = G(m₁m₂/r²)', 'sin²θ + cos²θ = 1', 'e^(iπ) + 1 = 0'
+        ];
 
+        class Particle {
+            constructor(type) {
+                this.type = type;
+                this.reset();
+            }
+
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                
+                if (this.type === 'star') {
+                    this.size = Math.random() * 1.5 + 0.5;
+                    this.speedX = (Math.random() - 0.5) * 0.05;
+                    this.speedY = (Math.random() - 0.5) * 0.05;
+                    this.opacity = Math.random() * 0.5 + 0.3;
+                    this.color = Math.random() > 0.1
+                        ? `rgba(234, 179, 8, ${this.opacity})`
+                        : `rgba(204, 214, 246, ${this.opacity})`;
+                } else if (this.type === 'nebula') {
+                    this.size = Math.random() * 200 + 100;
+                    this.speedX = (Math.random() - 0.5) * 0.02;
+                    this.speedY = (Math.random() - 0.5) * 0.02;
+                    this.opacity = Math.random() * 0.05 + 0.02;
+                    this.color = Math.random() > 0.5
+                        ? `rgba(119, 44, 232, ${this.opacity})`
+                        : `rgba(29, 78, 216, ${this.opacity})`;
+                } else if (this.type === 'shootingStar') {
+                    this.x = Math.random() * canvas.width;
+                    this.y = -20;
+                    this.size = Math.random() * 2 + 1;
+                    const baseSpeed = Math.random() * 2.5 + 1.5;
+                    this.speedX = baseSpeed;
+                    this.speedY = baseSpeed * 0.6;
+                    this.opacity = 1;
+                    this.life = 0;
+                    this.maxLife = 400;
+                    this.trail = [];
+                }
+            }
+
+            draw() {
+                ctx.beginPath();
+                if (this.type === 'nebula') {
+                    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
+                    gradient.addColorStop(0, this.color);
+                    gradient.addColorStop(1, this.color.replace(/[\d.]+\)$/, '0)'));
+                    ctx.fillStyle = gradient;
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                } else {
+                    ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                    ctx.fillStyle = this.color;
+                    ctx.shadowColor = 'rgba(234, 179, 8, 0.8)';
+                    ctx.shadowBlur = 15;
+                }
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                if (this.type === 'shootingStar' && this.trail.length > 1) {
+                    ctx.beginPath();
+                    ctx.moveTo(this.trail[0].x, this.trail[0].y);
+                    for (let i = 1; i < this.trail.length; i++) {
+                        ctx.lineTo(this.trail[i].x, this.trail[i].y);
+                    }
+                    ctx.strokeStyle = `rgba(255, 223, 150, ${this.opacity * 0.3})`;
+                    ctx.lineWidth = this.size * 0.8;
+                    ctx.stroke();
+                }
+            }
+
+            update() {
+                this.x += this.speedX;
+                this.y += this.speedY;
+
+                if (this.x < -this.size * 10 || this.x > canvas.width + this.size * 10 ||
+                    this.y < -this.size * 10 || this.y > canvas.height + this.size * 10) {
+                    this.reset();
+                }
+
+                if (this.type === 'shootingStar') {
+                    this.trail.unshift({ x: this.x, y: this.y });
+                    if (this.trail.length > 10) this.trail.pop();
+                }
+
+                this.draw();
+            }
+        }
+
+        class Equation {
+            constructor() { this.reset(); }
+            reset() {
+                this.text = mathEquations[Math.floor(Math.random() * mathEquations.length)];
+                this.life = 0;
+                this.maxLife = 300;
+                this.opacity = 0;
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+            }
+            draw() {
+                ctx.font = '20px Cormorant Garamond';
+                ctx.fillStyle = `rgba(234, 179, 8, ${this.opacity})`;
+                ctx.shadowColor = 'rgba(234, 179, 8, 0.8)';
+                ctx.shadowBlur = 10;
+                ctx.fillText(this.text, this.x, this.y);
+                ctx.shadowBlur = 0;
+            }
+            update() {
+                this.life++;
+                if (this.life < 100) this.opacity = Math.min(1, this.opacity + 0.01);
+                else if (this.life > this.maxLife - 100) this.opacity = Math.max(0, this.opacity - 0.01);
+                if (this.life >= this.maxLife) this.reset();
+                this.draw();
+            }
+        }
+
+        function init() {
+            particles = [];
+            equations = [];
+            const numStars = (canvas.width * canvas.height) / 7000;
+            for (let i = 0; i < 5; i++) particles.push(new Particle('nebula'));
+            for (let i = 0; i < numStars; i++) particles.push(new Particle('star'));
+            for (let i = 0; i < 4; i++) particles.push(new Particle('shootingStar'));
+            // === UPDATED: Increased number of equations to 9 ===
+            for (let i = 0; i < 9; i++) equations.push(new Equation());
+        }
+
+        function animate() {
+            ctx.fillStyle = 'rgba(10, 25, 47, 0.12)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            for (let p of particles) p.update();
+            for (let e of equations) e.update();
+            requestAnimationFrame(animate);
+        }
+
+        init();
+        animate();
+        
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+            init();
+        });
+
+        // --- SCRIPT FOR INTERACTIVE NEBULA (LAYER 2) ---
+        particlesJS("particles-js", {
+            "particles": {
+                "number": { "value": 80, "density": { "enable": true, "value_area": 800 } },
+                "color": { "value": ["#FFD700", "#FFFFFF", "#B8860B"] },
+                "shape": { "type": "circle" },
+                "opacity": { "value": 0.8, "random": true, "anim": { "enable": true, "speed": 1, "opacity_min": 0.1, "sync": false } },
+                "size": { "value": 2.5, "random": true, "anim": { "enable": true, "speed": 2, "size_min": 0.5, "sync": false } },
+                "line_linked": { "enable": true, "distance": 150, "color": "#EAB308", "opacity": 0.4, "width": 1 },
+                "move": { "enable": true, "speed": 1.5, "direction": "none", "random": false, "straight": false, "out_mode": "out", "bounce": false, "attract": { "enable": true, "rotateX": 600, "rotateY": 1200 } }
+            },
+            "interactivity": {
+                "detect_on": "canvas",
+                "events": { "onhover": { "enable": true, "mode": "grab" }, "onclick": { "enable": true, "mode": "push" }, "resize": true },
+                "modes": {
+                    "grab": { "distance": 200, "line_linked": { "opacity": 1 } },
+                    "bubble": { "distance": 400, "size": 40, "duration": 2, "opacity": 8, "speed": 3 },
+                    "repulse": { "distance": 150, "duration": 0.4 },
+                    "push": { "particles_nb": 4 },
+                    "remove": { "particles_nb": 2 }
+                }
+            },
+            "retina_detect": true
+        });
+        
+        // Initialize Mobile Menu
+        window.onload = function() {
+            const mobileMenuButton = document.getElementById('mobile-menu-button');
+            const mobileMenu = document.getElementById('mobile-menu');
+            mobileMenuButton.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+            });
+        }
+    </script>
 </body>
 </html>
