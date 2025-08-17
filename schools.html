@@ -115,18 +115,18 @@
           <a href="contact.html" class="text-white hover:text-gold transition text-lg">Connect</a>
         </div>
         <div class="md:hidden">
-          <button id="mobile-menu-button" class="text-white focus:outline-none">
-            <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
-          </button>
+                <button id="mobile-menu-button" class="text-white focus:outline-none">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="3" y1="12" x2="21" y2="12"></line><line x1="3" y1="6" x2="21" y2="6"></line><line x1="3" y1="18" x2="21" y2="18"></line></svg>
+                </button>
+            </div>
+        </nav>
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden bg-black/90 px-6 pb-4 space-y-2">
+            <a href="index.html" class="block py-2 text-white hover:text-gold text-center text-lg">Home</a>
+            <a href="careers.html" class="block py-2 text-white hover:text-gold text-center text-lg">Careers</a>
+            <a href="schools.html" class="block py-2 text-white hover:text-gold text-center text-lg">Services for School</a>
+            <a href="contact.html" class="block py-2 text-white hover:text-gold text-center text-lg">Connect</a>
         </div>
-      </nav>
-      <!-- Mobile Menu -->
-      <div id="mobile-menu" class="hidden md:hidden bg-black/90 px-6 pb-4 flex flex-col space-y-2">
-          <a href="index.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Home</a>
-          <a href="careers.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Careers</a>
-          <a href="schools.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Services for School</a>
-          <a href="contact.html" class="text-white hover:text-gold transition text-lg py-2 text-center">Connect</a>
-      </div>
     </header>
 
       <!-- School Partnership Section -->
@@ -425,6 +425,20 @@
         function closeModal() {
             modal.classList.add('opacity-0', 'pointer-events-none');
         }
+
+         
+        // --- Mobile Menu ---
+        const mobileMenuButton = document.getElementById('mobile-menu-button');
+        const mobileMenu = document.getElementById('mobile-menu');
+        const navLinks = document.querySelectorAll('#mobile-menu a, nav a');
+        mobileMenuButton.addEventListener('click', () => mobileMenu.classList.toggle('hidden'));
+        navLinks.forEach(link => {
+            link.addEventListener('click', (e) => {
+                mobileMenu.classList.add('hidden');
+                const targetId = link.getAttribute('href');
+                if (targetId.startsWith('#')) { e.preventDefault(); document.querySelector(targetId).scrollIntoView({ behavior: 'smooth' }); }
+            });
+        });
     </script>
 </body>
 </html>
